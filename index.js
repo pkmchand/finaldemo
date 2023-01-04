@@ -26,7 +26,9 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 // enabling CORS for all requests
-app.use(cors());
+app.use(cors({
+    origin: 'http://13.234.20.78:80',
+}))
 
 app.all('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
