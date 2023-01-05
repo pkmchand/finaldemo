@@ -39,14 +39,25 @@ const corsOpts = {
 };
 
 app.use(cors());
-app.options('*', cors());
-// app.use(function(req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-//   next();
-// });
+
+
+var allowlist = ['https://3.110.184.157', 'http://13.234.20.78/']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 
 // adding morgan to log HTTP requests
@@ -68,7 +79,7 @@ function getTwitchAuthorization() {
   });
 }
 
-app.get('/url', cors(),function(req, res){
+app.get('/url', cors(corsOptionsDelegate),function(req, res){
     console.log(req.query.Url)
     if (req.query.Url===undefined){
         (async () => {
