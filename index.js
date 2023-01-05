@@ -38,19 +38,30 @@ const corsOpts = {
   ],
 };
 
-app.use(cors());
 
 
 var allowlist = ['https://3.110.184.157/', 'http://13.234.20.78/']
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+
+
+
+const corsOptionsDelegate = (req, callback) => {
+  let corsOptions;
+
+  let isDomainAllowed = whitelist.indexOf(req.header('Origin')) !== -1;
+  let isExtensionAllowed = req.path.endsWith('.jpg');
+
+  if (isDomainAllowed && isExtensionAllowed) {
+      // Enable CORS for this request
+      corsOptions = { origin: true }
   } else {
-    corsOptions = { origin: false } // disable CORS for this request
+      // Disable CORS for this request
+      corsOptions = { origin: false }
   }
-  callback(null, corsOptions) // callback expects two parameters: error and options
+  callback(null, corsOptions)
 }
+app.use(cors(corsOptionsDelegate));
+
+
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
