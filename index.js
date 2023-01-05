@@ -41,7 +41,7 @@ const corsOpts = {
 app.use(cors());
 
 
-var allowlist = ['https://3.110.184.157', 'http://13.234.20.78/']
+var allowlist = ['https://3.110.184.157/', 'http://13.234.20.78/']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
