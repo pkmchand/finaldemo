@@ -52,10 +52,10 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
 app.use(function(req, res, next) {
-  req.setHeader('Access-Control-Allow-Origin', '*');
-  req.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  req.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  req.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
 
