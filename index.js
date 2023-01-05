@@ -52,10 +52,10 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
 app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  req.setHeader('Access-Control-Allow-Origin', '*');
+  req.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  req.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  req.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
 
@@ -67,17 +67,7 @@ app.use(morgan('combined'));
 app.get('/', (req, res) => {
   res.send(ads);
 });
-function getTwitchAuthorization() {
-  let url = `https://id.twitch.tv/oauth2/token?client_id=${clinetId}&client_secret=${clinetSecret}&grant_type=client_credentials`;
 
-  return fetch(url, {
-  method: "POST",
-  })
-  .then((res) => res.json())
-  .then((data) => {
-      return data;
-  });
-}
 
 app.get('/url', cors(corsOptionsDelegate),function(req, res){
     console.log(req.query.Url)
