@@ -8,8 +8,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-let clinetId = "lxi5lduk5041n6mrxaz2caecq1ahgz";
-let clinetSecret = "a7md2bf1g9lskf6refbbn3toprg4u5";
 
 
 // defining the Express app
@@ -31,6 +29,9 @@ const corsOpts = {
 
   methods: [
     'GET',
+    'POST',
+    'PUT',
+    'DELETE',
   ],
 
   allowedHeaders: [
@@ -40,35 +41,35 @@ const corsOpts = {
 
 
 
-var allowlist = ['https://3.110.184.157/', 'http://13.234.20.78/']
+// var allowlist = ['https://3.110.184.157/', 'http://13.234.20.78/']
 
 
 
-const corsOptionsDelegate = (req, callback) => {
-  let corsOptions;
+// const corsOptionsDelegate = (req, callback) => {
+//   let corsOptions;
 
-  let isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
-  let isExtensionAllowed = req.path.endsWith('.jpg');
+//   let isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
+//   let isExtensionAllowed = req.path.endsWith('.jpg');
 
-  if (isDomainAllowed && isExtensionAllowed) {
-      // Enable CORS for this request
-      corsOptions = { origin: true }
-  } else {
-      // Disable CORS for this request
-      corsOptions = { origin: false }
-  }
-  callback(null, corsOptions)
-}
-app.use(cors(corsOptionsDelegate));
+//   if (isDomainAllowed && isExtensionAllowed) {
+//       // Enable CORS for this request
+//       corsOptions = { origin: true }
+//   } else {
+//       // Disable CORS for this request
+//       corsOptions = { origin: false }
+//   }
+//   callback(null, corsOptions)
+// }
+app.use(cors(corsOpts));
 
 
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//   res.setHeader('Access-Control-Allow-Credentials', true);
+//   next();
+// });
 
 
 // adding morgan to log HTTP requests
