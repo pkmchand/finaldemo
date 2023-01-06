@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/url', cors(corsOptionsDelegate),function(req, res){
+app.get('/url', function(req, res){
     console.log(req.query.Url)
     if (req.query.Url===undefined){
         (async () => {
