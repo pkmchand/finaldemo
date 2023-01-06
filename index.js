@@ -36,6 +36,10 @@ const corsOpts = {
 
   allowedHeaders: [
     'Content-Type',
+    'Origin', 
+    'X-Requested-With', 
+    'Accept', 
+    'Authorization',
   ],
 };
 
